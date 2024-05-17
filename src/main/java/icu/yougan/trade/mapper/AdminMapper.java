@@ -1,6 +1,7 @@
-package com.shanzhu.st.mapper;
+package icu.yougan.trade.mapper;
 
-import com.shanzhu.st.entity.Admin;
+
+import icu.yougan.trade.entity.Admin;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -9,8 +10,8 @@ import java.util.List;
 /**
  * 管理员相关 数据持久层
  *
- * @author: ShanZhu
- * @date: 2024-01-05
+ * @author: YouGan
+ * @date: 2024-05-17
  */
 @Mapper
 public interface AdminMapper {

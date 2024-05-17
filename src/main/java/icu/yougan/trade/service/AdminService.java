@@ -1,13 +1,14 @@
-package com.shanzhu.st.service;
+package icu.yougan.trade.service;
 
-import com.shanzhu.st.entity.Admin;
-import com.shanzhu.st.vo.PageVo;
+
+import icu.yougan.trade.entity.Admin;
+import icu.yougan.trade.vo.PageVo;
 
 /**
  * 管理员相关 服务层
  *
- * @author: ShanZhu
- * @date: 2024-01-05
+ * @author: YouGan
+ * @date: 2024-05-17
  */
 public interface AdminService {
 

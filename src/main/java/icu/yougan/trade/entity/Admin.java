@@ -7,8 +7,8 @@ import java.io.Serializable;
 /**
  * 管理员 实体对象
  *
- * @author: ShanZhu
- * @date: 2024-01-05
+ * @author: YouGan
+ * @date: 2024-05-17
  */
 @Data
 public class Admin implements Serializable {

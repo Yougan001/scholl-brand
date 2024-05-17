@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.shanzhu.st.mapper.AdminMapper">
+<mapper namespace="icu.yougan.trade.mapper.AdminMapper">
 
-  <resultMap id="BaseResultMap" type="com.shanzhu.st.entity.Admin">
+  <resultMap id="BaseResultMap" type="icu.yougan.trade.entity.Admin">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="account_number" jdbcType="VARCHAR" property="accountNumber" />
     <result column="admin_password" jdbcType="VARCHAR" property="adminPassword" />
@@ -41,14 +41,14 @@
     where id = #{id,jdbcType=BIGINT}
   </delete>
 
-  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.shanzhu.st.entity.Admin" useGeneratedKeys="true">
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="icu.yougan.trade.entity.Admin" useGeneratedKeys="true">
     insert into sh_admin (account_number, admin_password, admin_name
       )
     values (#{accountNumber,jdbcType=VARCHAR}, #{adminPassword,jdbcType=VARCHAR}, #{adminName,jdbcType=VARCHAR}
       )
   </insert>
 
-  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.shanzhu.st.entity.Admin" useGeneratedKeys="true">
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="icu.yougan.trade.entity.Admin" useGeneratedKeys="true">
     insert into sh_admin
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="accountNumber != null">
@@ -74,7 +74,7 @@
     </trim>
   </insert>
 
-  <update id="updateByPrimaryKeySelective" parameterType="com.shanzhu.st.entity.Admin">
+  <update id="updateByPrimaryKeySelective" parameterType="icu.yougan.trade.entity.Admin">
     update sh_admin
     <set>
       <if test="accountNumber != null">
@@ -90,7 +90,7 @@
     where id = #{id,jdbcType=BIGINT}
   </update>
 
-  <update id="updateByPrimaryKey" parameterType="com.shanzhu.st.entity.Admin">
+  <update id="updateByPrimaryKey" parameterType="icu.yougan.trade.entity.Admin">
     update sh_admin
     set account_number = #{accountNumber,jdbcType=VARCHAR},
       admin_password = #{adminPassword,jdbcType=VARCHAR},
