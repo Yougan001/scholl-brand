@@ -2,8 +2,12 @@ package icu.yougan.trade.controller;
 
 
 import icu.yougan.trade.entity.Admin;
+import icu.yougan.trade.entity.IdleItem;
+import icu.yougan.trade.entity.User;
 import icu.yougan.trade.enums.ErrorMsg;
 import icu.yougan.trade.service.AdminService;
+import icu.yougan.trade.service.IdleItemService;
+import icu.yougan.trade.service.OrderService;
 import icu.yougan.trade.service.UserService;
 import icu.yougan.trade.vo.R;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +31,11 @@ public class AdminController {
     @Resource
     private AdminService adminService;
 
+    @Resource
+    private IdleItemService idleItemService;
+
+    @Resource
+    private OrderService orderService;
 
     @Resource
     private UserService userService;
@@ -114,5 +123,166 @@ public class AdminController {
         return R.fail(ErrorMsg.PARAM_ERROR);
     }
 
+    /**
+     * 违规状态列表
+     *
+     * @param session session
+     * @param status  状态
+     * @param page    分页大小
+     * @param nums    分页页数
+     * @return 管理员列表
+     */
+    @GetMapping("idleList")
+    public R idleList(
+            HttpSession session,
+            @RequestParam("status") @NotNull @NotEmpty Integer status,
+            @RequestParam(value = "page", required = false) Integer page,
+            @RequestParam(value = "nums", required = false) Integer nums
+    ) {
+        if (session.getAttribute("admin") == null) {
+            return R.fail(ErrorMsg.COOKIE_ERROR);
+        }
+        int p = 1;
+        int n = 8;
+        if (null != page) {
+            p = page > 0 ? page : 1;
+        }
+        if (null != nums) {
+            n = nums > 0 ? nums : 8;
+        }
+        return R.success(idleItemService.adminGetIdleList(status, p, n));
+    }
+
+    /**
+     * 更新违规状态
+     *
+     * @param session session
+     * @param id      用户id
+     * @param status  状态
+     * @return 结果
+     */
+    @GetMapping("updateIdleStatus")
+    public R updateIdleStatus(
+            HttpSession session,
+            @RequestParam("id") @NotNull @NotEmpty Long id,
+            @RequestParam("status") @NotNull @NotEmpty Integer status
+    ) {
+        if (session.getAttribute("admin") == null) {
+            return R.fail(ErrorMsg.COOKIE_ERROR);
+        }
+        IdleItem idleItem = new IdleItem();
+        idleItem.setId(id);
+        idleItem.setIdleStatus(status.byteValue());
+        if (idleItemService.updateIdleItem(idleItem)) {
+            return R.success();
+        }
+        return R.fail(ErrorMsg.SYSTEM_ERROR);
+    }
+
+    /**
+     * 查询订单列表
+     *
+     * @param session session
+     * @param page    分页大小
+     * @param nums    页数
+     * @return 结果
+     */
+    @GetMapping("orderList")
+    public R orderList(
+            HttpSession session,
+            @RequestParam(value = "page", required = false) Integer page,
+            @RequestParam(value = "nums", required = false) Integer nums
+    ) {
+        if (session.getAttribute("admin") == null) {
+            return R.fail(ErrorMsg.COOKIE_ERROR);
+        }
+        int p = 1;
+        int n = 8;
+        if (null != page) {
+            p = page > 0 ? page : 1;
+        }
+        if (null != nums) {
+            n = nums > 0 ? nums : 8;
+        }
+        return R.success(orderService.getAllOrder(p, n));
+    }
+
+    /**
+     * 删除订单
+     *
+     * @param session session
+     * @param id      订单id
+     * @return 结果
+     */
+    @GetMapping("deleteOrder")
+    public R deleteOrder(
+            HttpSession session,
+            @RequestParam("id") @NotNull @NotEmpty Long id
+    ) {
+        if (session.getAttribute("admin") == null) {
+            return R.fail(ErrorMsg.COOKIE_ERROR);
+        }
+        if (orderService.deleteOrder(id)) {
+            return R.success();
+        }
+        return R.fail(ErrorMsg.SYSTEM_ERROR);
+    }
+
+    /**
+     * 用户列表
+     *
+     * @param session session
+     * @param page    分页大小
+     * @param nums    页数
+     * @param status  状态
+     * @return 列表
+     */
+    @GetMapping("userList")
+    public R userList(
+            HttpSession session,
+            @RequestParam(value = "page", required = false) Integer page,
+            @RequestParam(value = "nums", required = false) Integer nums,
+            @RequestParam("status") @NotNull @NotEmpty Integer status
+    ) {
+        if (session.getAttribute("admin") == null) {
+            return R.fail(ErrorMsg.COOKIE_ERROR);
+        }
+        int p = 1;
+        int n = 8;
+        if (null != page) {
+            p = page > 0 ? page : 1;
+        }
+        if (null != nums) {
+            n = nums > 0 ? nums : 8;
+        }
+        return R.success(userService.getUserByStatus(status, p, n));
+    }
+
+    /**
+     * 更新用户状态
+     *
+     * @param session session
+     * @param id      id
+     * @param status  状态
+     * @return 结果
+     */
+    @GetMapping("updateUserStatus")
+    public R updateUserStatus(
+            HttpSession session,
+            @RequestParam("id") @NotNull @NotEmpty Long id,
+            @RequestParam("status") @NotNull @NotEmpty Integer status
+    ) {
+        if (session.getAttribute("admin") == null) {
+            return R.fail(ErrorMsg.COOKIE_ERROR);
+        }
+        User user = new User();
+        user.setId(id);
+        user.setUserStatus(status.byteValue());
+        if (userService.updateUserInfo(user)) {
+            return R.success();
+        }
+
+        return R.fail(ErrorMsg.SYSTEM_ERROR);
+    }
 
 }
