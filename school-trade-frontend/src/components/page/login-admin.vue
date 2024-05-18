@@ -4,7 +4,7 @@
             <div class="login-body">
                 <div class="login-title">
                     <img src="../../assets/logo.png" style="width: 40px;position: relative; top: 13px;right: 6px">
-                    <span style='color: #e75c09'>AdminLogin</span>
+                    <span style='color: #e75c09'>管理员登录</span>
                 </div>
                 <el-form ref="form" :model="userForm">
                     <el-input placeholder="请输入管理员账号" v-model="userForm.accountNumber" class="login-input">

@@ -31,6 +31,7 @@
                     </div>
                     <div class="details-picture">
                         <el-image v-for="(imgUrl,i) in idleItemInfo.pictureList"
+                        :key="i"
                                   style="width: 90%;margin-bottom: 2px;"
                                   :src="imgUrl"
                                   fit="contain"></el-image>

@@ -4,7 +4,7 @@
             <div class="login-body">
                 <div class="login-title" @click="toIndex" >
                     <img src="../../assets/logo.png" style="width: 40px;position: relative; top: 13px;right: 6px">
-                    <span style='color: #e75c09'>UserLogin</span>
+                    <span style='color: #e75c09'>用户登录</span>
                 </div>
                 <el-form ref="form" :model="userForm">
                     <el-input placeholder="请输入账号..." v-model="userForm.accountNumber" class="login-input">
