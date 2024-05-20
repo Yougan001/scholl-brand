@@ -4,14 +4,14 @@
             <div class="app-name">
                 <router-link to="/">
                     <img src="../../assets/logo.png" style="width: 40px;position: relative; top: 13px;right: 6px">
-                    <b style="color: #e75c09" >
+                    <b style="color:#409EFF" >
                         校园跳蚤市场
                     </b>
                 </router-link>
             </div>
             <div class="search-container">
-                <el-input placeholder="搜物品..." v-model="searchValue" @keyup.enter.native="searchIdle">
-                    <el-button slot="append" icon="el-icon-search" @click="searchIdle"></el-button>
+                <el-input placeholder="请输入关键词..." v-model="searchValue" @keyup.enter.native="searchIdle">
+                    <el-button slot="append" icon="el-icon-search" @click="searchIdle">搜索</el-button>
                 </el-input>
             </div>
             <el-button type="primary" icon="el-icon-plus"  @click="toRelease">物品发布</el-button>
