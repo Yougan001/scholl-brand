@@ -2,65 +2,74 @@
     <div>
         <app-head></app-head>
         <app-body>
-            <div class="content">
-                <el-tabs v-model="labelName" type="card" @tab-click="handleClick" class="custom-tabs">
-                    <el-tab-pane label="全部" name="0"></el-tab-pane>
-                    <el-tab-pane label="数码" name="1"></el-tab-pane>
-                    <el-tab-pane label="家电" name="2"></el-tab-pane>
-                    <el-tab-pane label="户外" name="3"></el-tab-pane>
-                    <el-tab-pane label="图书" name="4"></el-tab-pane>
-                    <el-tab-pane label="其他" name="5"></el-tab-pane>
-                </el-tabs>
-
-                <div class="idle-list">
-                    <el-row :gutter="30">
-                        <el-col :span="6" v-for="(idle, index) in idleList" :key="index">
-                            <div class="idle-card" @click="toDetails(idle)">
-                                <el-image
-                                    class="idle-image"
-                                    :src="idle.imgUrl"
-                                    fit="cover">
-                                    <div slot="error" class="image-slot">
-                                        <i class="el-icon-picture-outline">无图</i>
-                                    </div>
-                                </el-image>
-                                <div class="idle-content">
-                                    <div class="idle-title">{{ idle.idleName }}</div>
-                                    <el-row class="idle-details">
-                                        <el-col :span="12">
-                                            <div class="idle-price">￥{{ idle.idlePrice }}</div>
-                                        </el-col>
-                                        <el-col :span="12">
-                                            <div class="idle-place">{{ idle.idlePlace }}</div>
-                                        </el-col>
-                                    </el-row>
-                                    <div class="user-info">
+            <el-row>
+                <el-col :span="4" class="sidebar">
+                    <el-menu
+                        default-active="0"
+                        class="el-menu-vertical-demo"
+                        @select="handleMenuSelect"
+                    >
+                        <el-menu-item index="0">全部</el-menu-item>
+                        <el-menu-item index="1">数码</el-menu-item>
+                        <el-menu-item index="2">家电</el-menu-item>
+                        <el-menu-item index="3">户外</el-menu-item>
+                        <el-menu-item index="4">图书</el-menu-item>
+                        <el-menu-item index="5">其他</el-menu-item>
+                    </el-menu>
+                </el-col>
+                <el-col :span="20" class="main-content">
+                    <div class="content">
+                        <div class="idle-list">
+                            <el-row :gutter="30">
+                                <el-col :span="6" v-for="(idle, index) in idleList" :key="index">
+                                    <div class="idle-card" @click="toDetails(idle)">
                                         <el-image
-                                            class="user-avatar"
-                                            :src="idle.user.avatar"
+                                            class="idle-image"
+                                            :src="idle.imgUrl"
                                             fit="cover">
                                             <div slot="error" class="image-slot">
                                                 <i class="el-icon-picture-outline">无图</i>
                                             </div>
                                         </el-image>
-                                        <div class="user-nickname">{{ idle.user.nickname }}</div>
+                                        <div class="idle-content">
+                                            <div class="idle-title">{{ idle.idleName }}</div>
+                                            <el-row class="idle-details">
+                                                <el-col :span="12">
+                                                    <div class="idle-price">￥{{ idle.idlePrice }}</div>
+                                                </el-col>
+                                                <el-col :span="12">
+                                                    <div class="idle-place">{{ idle.idlePlace }}</div>
+                                                </el-col>
+                                            </el-row>
+                                            <div class="user-info">
+                                                <el-image
+                                                    class="user-avatar"
+                                                    :src="idle.user.avatar"
+                                                    fit="cover">
+                                                    <div slot="error" class="image-slot">
+                                                        <i class="el-icon-picture-outline">无图</i>
+                                                    </div>
+                                                </el-image>
+                                                <div class="user-nickname">{{ idle.user.nickname }}</div>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                        </el-col>
-                    </el-row>
-                </div>
-                <div class="pagination">
-                    <el-pagination
-                        background
-                        @current-change="handleCurrentChange"
-                        :current-page.sync="currentPage"
-                        :page-size="8"
-                        layout="prev, pager, next, jumper"
-                        :total="totalItem">
-                    </el-pagination>
-                </div>
-            </div>
+                                </el-col>
+                            </el-row>
+                        </div>
+                        <div class="pagination">
+                            <el-pagination
+                                background
+                                @current-change="handleCurrentChange"
+                                :current-page.sync="currentPage"
+                                :page-size="8"
+                                layout="prev, pager, next, jumper"
+                                :total="totalItem">
+                            </el-pagination>
+                        </div>
+                    </div>
+                </el-col>
+            </el-row>
             <app-foot></app-foot>
         </app-body>
     </div>
@@ -93,7 +102,7 @@
             $route(to, from) {
                 this.labelName = to.query.labelName;
                 let val = parseInt(to.query.page) ? parseInt(to.query.page) : 1;
-                this.currentPage = parseInt(to.query.page) ? parseInt(to.query.page) : 1;
+                this.currentPage = val;
                 this.findIdleTiem(val);
             }
         },
@@ -144,8 +153,10 @@
                     });
                 }
             },
-            handleClick(tab, event) {
+            handleMenuSelect(index) {
+                this.labelName = index;
                 this.$router.replace({ query: { page: 1, labelName: this.labelName } });
+                this.findIdleTiem(1);
             },
             handleCurrentChange(val) {
                 this.$router.replace({ query: { page: val, labelName: this.labelName } });
@@ -160,28 +171,34 @@
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
 
-.content {
-    min-height: 85vh;
-    padding: 20px;
+.el-menu-vertical-demo {
+    width: 100%;
+    border-right: 1px solid #e0e0e0;
+    height: calc(100vh - 58px);
+    overflow-y: auto;
     background-color: #f5f5f5;
-    font-family: 'Roboto', sans-serif;
 }
 
-.custom-tabs {
-    margin-bottom: 20px;
-}
-
-.custom-tabs .el-tabs__item {
+.el-menu-item {
+    font-size: 16px;
     color: #1e88e5;
     transition: color 0.3s;
 }
 
-.custom-tabs .el-tabs__item:hover {
+.el-menu-item:hover {
     color: #0d47a1;
 }
 
-.custom-tabs .el-tabs__item.is-active {
+.el-menu-item.is-active {
     color: #0d47a1;
+    background-color: #e3f2fd !important;
+}
+
+.content {
+    min-height: 85vh;
+    padding: 20px;
+    background-color: #ffffff;
+    font-family: 'Roboto', sans-serif;
 }
 
 .idle-list {
@@ -223,7 +240,11 @@
 }
 
 .idle-details {
-    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.idle-details div {
+    margin-bottom: 5px;
 }
 
 .idle-price {
@@ -240,6 +261,7 @@
 .user-info {
     display: flex;
     align-items: center;
+    margin-top: 10px;
 }
 
 .user-avatar {
@@ -258,5 +280,16 @@
     display: flex;
     justify-content: center;
     padding: 20px 0;
+}
+
+.sidebar {
+    background-color: #f5f5f5;
+    height: calc(100vh - 60px);
+}
+
+.main-content {
+    background-color: #ffffff;
+    padding: 20px;
+    height: calc(100vh - 60px);
 }
 </style>

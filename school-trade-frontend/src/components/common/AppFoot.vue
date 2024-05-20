@@ -11,16 +11,18 @@
 </script>
 
 <style scoped>
-    .foot-container {
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        height: 40px;
-        padding-top: 10px;
-    }
+.foot-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px; /* Increased height to ensure better visibility */
+    background-color: #f5f5f5;
+    border-top: 1px solid #e0e0e0;
+}
 
-    .author {
-        color: #999999;
-        font-size: 14px;
-    }
+.author {
+    color: #999999;
+    font-size: 14px;
+}
 </style>
