@@ -3,6 +3,7 @@ package icu.yougan.trade.service.Impl;
 import icu.yougan.trade.entity.Address;
 import icu.yougan.trade.mapper.AddressMapper;
 import icu.yougan.trade.service.AddressService;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.List;
  * @Version:v1.0.0
  * @Description:地址相关 服务实现类
  **/
+@Service
 public class AddressServiceImpl  implements AddressService {
 
     @Resource
