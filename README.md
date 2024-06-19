@@ -1,5 +1,5 @@
 前端：
-第一步：npm run install
+第一步：npm run install dev
 第二步：npm run 
 
 后端：
