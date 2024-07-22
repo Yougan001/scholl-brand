@@ -1,6 +1,6 @@
 前端：
 第一步：npm run install 
-第二步：npm run de
+第二步：npm run dev
 
 后端：
 第一步：修改数据库配置
